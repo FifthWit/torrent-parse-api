@@ -12,13 +12,13 @@ export default eventHandler(async (event) => {
     .map(item => {
       if (!item.title || !item.url) return null;
       const parsed = parse(item.title) as any;
-      if (parsed && (parsed.codec === 'x264' || parsed.codec === 'h265' || parsed.codec === 'h264')) {
+      if (parsed && (parsed.codec === 'x264' || parsed.codec === 'h265' || parsed.codec === 'h264' || parsed.audio === 'aac')) {
         return { ...parsed, url: item.url };
       }
       return null;
     })
     .filter(Boolean);
-
+    
   // Reorder: .audio === 'aac' and .container === 'mp4' at the top
   results.sort((a: any, b: any) => {
     const aTop = a.audio === 'aac' && a.container === 'mp4' ? 1 : 0;
